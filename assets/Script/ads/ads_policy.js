@@ -2,7 +2,7 @@ var config = require('./sdk_config');
 // let logManager = require('../sdk_log');
 
 var AdMobObj = require('./admob_plugin');
-var FBAdsObj = require('./fbads_plugin');
+// var FBAdsObj = require('./fbads_plugin');
 
 
 var showlog = function (msg) {
@@ -23,7 +23,7 @@ var AdPolicy = function () {
 
 
     this._admob = new AdMobObj(config.AdsConfig); // 保存一个admob对象
-    this._fbads = new FBAdsObj(config.FBAdsConfig);
+    // this._fbads = new FBAdsObj(config.FBAdsConfig);
 };
 
 
@@ -50,7 +50,7 @@ AdPolicy.prototype.hideBanner = function () {
 AdPolicy.prototype.showRewardVideoAd = function (successCallback, failureCallback) {
     showlog("AdPolicy.showRewardVideoAd....");
     return this._admob.showRewardVideoAd(successCallback, function () {
-        this._fbads.showRewardVideoAd(successCallback, failureCallback)
+        // this._fbads.showRewardVideoAd(successCallback, failureCallback)
     }.bind(this));
 };
 

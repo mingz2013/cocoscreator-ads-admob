@@ -351,6 +351,5 @@ function defaults(o, defaultObject) {
 }
 
 
-if (typeof module !== undefined && module.exports) {
-    module.exports = AdMobInterafce;
-}
+
+module.exports = AdMobInterafce;

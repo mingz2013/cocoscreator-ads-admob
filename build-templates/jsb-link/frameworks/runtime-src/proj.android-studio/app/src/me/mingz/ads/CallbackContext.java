@@ -18,8 +18,13 @@ public class CallbackContext {
     }
 
 
+    public void success(){
+        this.success("");
+    }
 
-
+    public void failure(){
+        this.failure("");
+    }
 
 
 }

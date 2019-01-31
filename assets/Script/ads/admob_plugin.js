@@ -9,7 +9,7 @@ var showlog = function (msg) {
 
 var showerror = function (msg) {
     console.log(msg);
-}
+};
 
 var AdMobObj = function (adsConfig) {
     showlog("AdMobObj.init........");

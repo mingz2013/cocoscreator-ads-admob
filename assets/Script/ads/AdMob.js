@@ -1,6 +1,8 @@
 'use strict';
 
 
+let JsbNativeCall = require("./JsbNativeCall");
+
 var AdMob = {};
 
 
@@ -360,7 +362,7 @@ AdMob.hideBanner = function (params) {
  * @param {Function} onFailure - optional on failure functioin
  */
 function callPlugin(action, params, onSuccess, onFailure) {
-    JsbNativeCall.exec('IronsourcePlugin',
+    JsbNativeCall.exec('Admob',
         action, params,
         function callPluginSuccess(result) {
 

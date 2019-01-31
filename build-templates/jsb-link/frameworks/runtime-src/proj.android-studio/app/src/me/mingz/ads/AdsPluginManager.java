@@ -33,7 +33,7 @@ public class AdsPluginManager {
     public AdsPluginManager() {
         Log.d(TAG, "AdsPluginManager: ");
         mPlugins = new HashMap<String, AdsPlugin>();
-        mPlugins.put("IronsourcePlugin", new IronsourcePlugin());
+//        mPlugins.put("IronsourcePlugin", new IronsourcePlugin());
         mPlugins.put("AdMobPlugin", new AdMobPlugin());
     }
 

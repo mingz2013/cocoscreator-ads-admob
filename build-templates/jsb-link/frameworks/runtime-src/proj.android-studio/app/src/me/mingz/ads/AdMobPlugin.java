@@ -303,7 +303,7 @@ public class AdMobPlugin extends AdsPlugin {
 
         this.init(args);
 
-        callbackContext.success("");
+        callbackContext.success();
 
 
     }
@@ -344,7 +344,7 @@ public class AdMobPlugin extends AdsPlugin {
     private void execActionCreateInterstitial(JSONObject args, CallbackContext callbackContext) {
 
         this.createInterstitial();
-        callbackContext.success("");
+        callbackContext.success();
 
     }
 
@@ -407,7 +407,7 @@ public class AdMobPlugin extends AdsPlugin {
 
     private void execActionLoadInterstitial(JSONObject args, CallbackContext callbackContext) {
         this.loadInterstitial();
-        callbackContext.success("");
+        callbackContext.success();
     }
 
 
@@ -442,7 +442,7 @@ public class AdMobPlugin extends AdsPlugin {
 
     private void execActionShowInterstitial(JSONObject args, CallbackContext callbackContext) {
         this.showInterstitial();
-        callbackContext.success("");
+        callbackContext.success();
     }
 
     private void showInterstitial() {
@@ -453,7 +453,7 @@ public class AdMobPlugin extends AdsPlugin {
 
     private void execActionCreateRewardedVideo(JSONObject args, CallbackContext callbackContext) {
         this.createRewardedVideo();
-        callbackContext.success("");
+        callbackContext.success();
     }
 
 
@@ -520,7 +520,7 @@ public class AdMobPlugin extends AdsPlugin {
     private void execActionLoadRewardedVideo(JSONObject args, CallbackContext callbackContext) {
 
         this.loadRewardedVideo();
-        callbackContext.success("");
+        callbackContext.success();
 
     }
 
@@ -539,7 +539,7 @@ public class AdMobPlugin extends AdsPlugin {
     private void execActionShowRewardedVideo(JSONObject args, CallbackContext callbackContext) {
 
         this.showRewardedVideo();
-        callbackContext.success("");
+        callbackContext.success();
 
     }
 
@@ -568,7 +568,7 @@ public class AdMobPlugin extends AdsPlugin {
             @Override
             public void run() {
                 self.createBanner(getBannerSize(size, w, h));
-                callbackContext.success("");
+                callbackContext.success();
             }
         });
 
@@ -636,7 +636,7 @@ public class AdMobPlugin extends AdsPlugin {
             public void run() {
 
                 self.loadBanner();
-                callbackContext.success("");
+                callbackContext.success();
             }
         });
 
@@ -677,7 +677,7 @@ public class AdMobPlugin extends AdsPlugin {
 
 
                 self.showBanner(pos, x, y);
-                callbackContext.success("");
+                callbackContext.success();
             }
         });
 

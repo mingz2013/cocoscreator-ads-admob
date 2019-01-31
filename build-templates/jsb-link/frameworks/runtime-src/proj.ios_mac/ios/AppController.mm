@@ -2,19 +2,19 @@
  Copyright (c) 2010-2013 cocos2d-x.org
  Copyright (c) 2013-2016 Chukong Technologies Inc.
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,16 +22,16 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
- ****************************************************************************/
+****************************************************************************/
 
 #import "AppController.h"
 #import "cocos2d.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
-#import "SDKWrapper.h"
 #import "platform/ios/CCEAGLView-ios.h"
 #import "AdsPluginManager.h"
 
+#import "cocos-analytics/CAAgent.h"
 
 using namespace cocos2d;
 
@@ -46,25 +46,21 @@ Application* app = nullptr;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [[SDKWrapper getInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 
+    [CAAgent enableDebug:NO];
 
     // Add the view controller's view to the window and display.
     float scale = [[UIScreen mainScreen] scale];
     CGRect bounds = [[UIScreen mainScreen] bounds];
     window = [[UIWindow alloc] initWithFrame: bounds];
-    
+
     // cocos2d application instance
     app = new AppDelegate(bounds.size.width * scale, bounds.size.height * scale);
     app->setMultitouch(true);
-    
+
     // Use RootViewController to manage CCEAGLView
     _viewController = [[RootViewController alloc]init];
-#ifdef NSFoundationVersionNumber_iOS_7_0
-    _viewController.automaticallyAdjustsScrollViewInsets = NO;
-    _viewController.extendedLayoutIncludesOpaqueBars = NO;
-    _viewController.edgesForExtendedLayout = UIRectEdgeAll;
-#else
     _viewController.wantsFullScreenLayout = YES;
-#endif
+
     // Set RootViewController to window
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
     {
@@ -76,11 +72,10 @@ Application* app = nullptr;
         // use this method on ios6
         [window setRootViewController:_viewController];
     }
-    
+
     [window makeKeyAndVisible];
-    
+
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
-    
 
     [[AdsPluginManager getInstance] initPlugins:_viewController];
     [[AdsPluginManager getInstance] application:application didFinishLaunchingWithOptions:launchOptions];
@@ -91,11 +86,13 @@ Application* app = nullptr;
     return YES;
 }
 
+
 - (void)applicationWillResignActive:(UIApplication *)application {
     /*
      Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
      Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
      */
+
     [[SDKWrapper getInstance] applicationWillResignActive:application];
     [[AdsPluginManager getInstance] applicationWillResignActive:application];
 }
@@ -116,7 +113,8 @@ Application* app = nullptr;
     [[SDKWrapper getInstance] applicationDidEnterBackground:application];
     [[AdsPluginManager getInstance] applicationDidEnterBackground:application];
     app->applicationDidEnterBackground();
-    
+    if (CAAgent.isInited)
+        [CAAgent onPause];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -126,7 +124,8 @@ Application* app = nullptr;
     [[SDKWrapper getInstance] applicationWillEnterForeground:application];
     [[AdsPluginManager getInstance] applicationWillEnterForeground:application];
     app->applicationWillEnterForeground();
-    
+    if (CAAgent.isInited)
+        [CAAgent onResume];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -135,6 +134,9 @@ Application* app = nullptr;
     [[AdsPluginManager getInstance] applicationWillTerminate:application];
     delete app;
     app = nil;
+
+    if (CAAgent.isInited)
+        [CAAgent onDestroy];
 }
 
 
@@ -143,8 +145,8 @@ Application* app = nullptr;
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application {
     /*
-     Free up as much memory as possible by purging cached data objects that can be recreated (or reloaded from disk) later.
-     */
+      Free up as much memory as possible by purging cached data objects that can be recreated (or reloaded from disk) later.
+    */
 }
 
 @end
