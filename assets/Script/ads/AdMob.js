@@ -1,6 +1,3 @@
-'use strict';
-
-
 let JsbNativeCall = require("./JsbNativeCall");
 
 var AdMob = {};
@@ -356,7 +353,7 @@ AdMob.hideBanner = function (params) {
 
 /**
  * Helper function to call  plugin
- * @param {String} name - function name to call
+ * @param {String} action - function name to call
  * @param {Object} params - optional params
  * @param {Function} onSuccess - optional on sucess function
  * @param {Function} onFailure - optional on failure functioin
@@ -410,8 +407,7 @@ function defaults(o, defaultObject) {
 }
 
 
-if (typeof module !== undefined && module.exports) {
-    module.exports = AdMob;
-}
+module.exports = AdMob;
+
 
 
